@@ -1,0 +1,21 @@
+version: "3.8"
+services:
+  customer:
+    build: .
+    ports:
+      - 8000:8000
+    environment:
+      APPS: customer
+  products:
+    build: .
+    ports:
+      - 8000:8001
+    environment:
+      APPS: products
+  proxy:
+    image: nginx
+    command:
+      - /api/customer:customer
+      - /api/products:products
+    ports:
+      - 80:80
